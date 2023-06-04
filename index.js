@@ -32,6 +32,7 @@ async function run() {
     // Send a ping to confirm a successful connection
     const menucollection = client.db("bristroDB").collection("menuCollection");
     const reviews = client.db("bristroDB").collection("reviews");
+    const cartCollection = client.db("bristroDB").collection("carts");
 
     app.get('/menuCollection', async(req , res) =>{
       const result = await menucollection.find().toArray();
@@ -42,6 +43,14 @@ async function run() {
       const result = await reviews.find().toArray();
       res.send(result);
       console.log(result);
+    })
+
+
+    app.post('/carts', async(req,res)=>{
+      const item = req.body;
+      console.log(item);
+      const result = await cartCollection.insertOne(item);
+      res.send(result);
     })
 
 
